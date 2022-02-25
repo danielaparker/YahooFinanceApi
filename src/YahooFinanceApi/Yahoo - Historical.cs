@@ -1,6 +1,5 @@
 ﻿using CsvHelper;
 using Flurl;
-using Flurl.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -78,11 +77,11 @@ namespace YahooFinanceApi
                     var (client, crumb) = await YahooClientFactory.GetClientAndCrumbAsync(reset, token).ConfigureAwait(false);
                     return await _GetResponseStreamAsync(client, crumb, token).ConfigureAwait(false);
                 }
-                catch (FlurlHttpException ex) when (ex.Call.Response?.StatusCode == (int)HttpStatusCode.NotFound)
+                catch (HttpRequestException ex) when (ex?.StatusCode == HttpStatusCode.NotFound)
                 {
                     throw new Exception($"Invalid ticker or endpoint for symbol '{symbol}'.", ex);
                 }
-                catch (FlurlHttpException ex) when (ex.Call.Response?.StatusCode == (int)HttpStatusCode.Unauthorized)
+                catch (HttpRequestException ex) when (ex?.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     Debug.WriteLine("GetResponseStreamAsync: Unauthorized.");
 

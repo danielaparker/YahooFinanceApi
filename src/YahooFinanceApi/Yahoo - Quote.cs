@@ -81,9 +81,9 @@ namespace YahooFinanceApi
                     .ReceiveJson() // ExpandoObject
                     .ConfigureAwait(false);
             }
-            catch (FlurlHttpException ex)
+            catch (HttpRequestException ex)
             {   
-                if (ex.Call.Response.StatusCode == (int)System.Net.HttpStatusCode.NotFound)
+                if (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
                     return new Dictionary<string, Security>(); // When there are no valid symbols
                 else throw;
             }
