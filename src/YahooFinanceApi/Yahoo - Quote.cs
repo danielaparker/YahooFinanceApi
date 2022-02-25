@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -56,10 +57,12 @@ namespace YahooFinanceApi
                 throw new ArgumentException($"Duplicate symbol: {duplicateSymbol}.");
 
             var urlBuilder = new UriBuilder("https://query1.finance.yahoo.com/v7/finance/quote");
-            urlBuilder.Query = $"symbols={HttpUtility.UrlEncode(string.Join(",", symbols))}"; 
-            string url = urlBuilder.Uri.ToString();
+            //urlBuilder.Query = $"symbols={HttpUtility.UrlEncode(string.Join(",", symbols))}"; 
             
             //string xml = client.DownloadString(uri.ToString()); 
+
+            var sb = new StringBuilder();
+            sb.Append($"symbols={HttpUtility.UrlEncode(string.Join(",", symbols))}");
 
 
             if (fields.Any())
@@ -68,8 +71,11 @@ namespace YahooFinanceApi
                 if (duplicateField != null)
                     throw new ArgumentException($"Duplicate field: {duplicateField}.");
 
-                url = url.SetQueryParam("fields", string.Join(",", fields.Select(s => s.ToLowerCamel())));
+                sb.Append($"&fields={HttpUtility.UrlEncode(string.Join(",", fields.Select(s => s.ToLowerCamel())))}");
+                //url = url.SetQueryParam("fields", string.Join(",", fields.Select(s => s.ToLowerCamel())));
             }
+            urlBuilder.Query = sb.ToString(); 
+            string url = urlBuilder.Uri.ToString();
 
             // Invalid symbols as part of a request are ignored by Yahoo.
             // So the number of symbols returned may be less than requested.
