@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace YahooFinanceApi
 {
@@ -54,8 +55,12 @@ namespace YahooFinanceApi
             if (duplicateSymbol != null)
                 throw new ArgumentException($"Duplicate symbol: {duplicateSymbol}.");
 
-            var url = "https://query1.finance.yahoo.com/v7/finance/quote"
-                .SetQueryParam("symbols", string.Join(",", symbols));
+            var urlBuilder = new UriBuilder("https://query1.finance.yahoo.com/v7/finance/quote");
+            urlBuilder.Query = $"symbols={HttpUtility.UrlEncode(string.Join(",", symbols))}"; 
+            string url = urlBuilder.Uri.ToString();
+            
+            //string xml = client.DownloadString(uri.ToString()); 
+
 
             if (fields.Any())
             {
