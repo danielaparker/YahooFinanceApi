@@ -40,17 +40,16 @@ namespace YahooFinanceApi
 
                 // random query to avoid cached response
                 var client = new FlurlClient($"https://finance.yahoo.com?{Helper.GetRandomString(8)}")
-                    .WithHeader(userAgentKey, userAgentValue)
-                    .EnableCookies();
+                    .WithHeader(userAgentKey, userAgentValue);
                 
                 await client.Request().GetAsync(token).ConfigureAwait(false);
 
-                if (client.Cookies?.Count > 0)
+                //if (client.Cookies?.Count > 0)
                     return client;
 
-                Debug.WriteLine("Failure to create client.");
+                //Debug.WriteLine("Failure to create client.");
 
-                await Task.Delay(100, token).ConfigureAwait(false);
+                //await Task.Delay(100, token).ConfigureAwait(false);
             }
 
             throw new Exception("Failure to create client.");

@@ -9,5 +9,12 @@ namespace YahooFinanceApi
         public decimal BeforeSplit { get; internal set; }
 
         public decimal AfterSplit { get; internal set; }
+
+        public bool IsEmpty()
+        {
+            if (BeforeSplit == 0 && AfterSplit == 0)
+                return true;
+            return false;
+        }
     }
 }

@@ -4,5 +4,6 @@ namespace YahooFinanceApi
     public interface ITick
     {
         DateTime DateTime { get; }
+        bool IsEmpty();
     }
 }
