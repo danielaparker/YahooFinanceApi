@@ -94,7 +94,7 @@ namespace YahooFinanceApi
 
             #region Local Functions
 
-            Task<Stream> _GetResponseStreamAsync(IFlurlClient _client, string _crumb, CancellationToken _token)
+            async Task<Stream> _GetResponseStreamAsync(HttpClient _client, string _crumb, CancellationToken _token)
             {
                 // Yahoo expects dates to be "Eastern Standard Time"
                 startTime = startTime?.FromEstToUtc() ?? new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -109,11 +109,10 @@ namespace YahooFinanceApi
                     .SetQueryParam("crumb", _crumb);
 
                 Debug.WriteLine(url);
-
-                return url
-                    .WithClient(_client)
-                    .GetAsync(_token)
-                    .ReceiveStream();
+                
+                var response = await _client.GetAsync(url);
+                var str = await response.Content.ReadAsStreamAsync(token);
+                return str;
             }
 
             #endregion
