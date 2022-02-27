@@ -1,10 +1,11 @@
-﻿using Flurl;
-using Flurl.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -77,42 +78,49 @@ namespace YahooFinanceApi
             urlBuilder.Query = sb.ToString(); 
             string url = urlBuilder.Uri.ToString();
 
-            // Invalid symbols as part of a request are ignored by Yahoo.
-            // So the number of symbols returned may be less than requested.
-            // If there are no valid symbols, an exception is thrown by Flurl.
-            // This exception is caught (below) and an empty dictionary is returned.
-            // There seems to be no easy way to reliably identify changed symbols.
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var response = await client.GetAsync(url);
+            var contentStream = await response.Content.ReadAsStringAsync();
 
-            dynamic expando = null;
+            JsonNode responseBody = JsonNode.Parse(contentStream);
 
-            try
+            var result = responseBody["quoteResponse"]["result"];
+
+            var options = new JsonSerializerOptions
             {
-                expando = await url
-                    .GetAsync(token)
-                    .ReceiveJson() // ExpandoObject
-                    .ConfigureAwait(false);
-            }
-            catch (HttpRequestException ex)
-            {   
-                if (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
-                    return new Dictionary<string, Security>(); // When there are no valid symbols
-                else throw;
-            }
-
-            var quoteExpando = expando.quoteResponse;
-
-            var error = quoteExpando.error;
-            if (error != null)
-                throw new InvalidDataException($"QueryAsync error: {error}");
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
 
             var securities = new Dictionary<string, Security>();
-
-            foreach (IDictionary<string, dynamic> dictionary in quoteExpando.result)
+            foreach (var item in result.AsArray())
             {
-                // Change the Yahoo field names to start with upper case.
-                var pascalDictionary = dictionary.ToDictionary(x => x.Key.ToPascal(), x => x.Value);
-                securities.Add(pascalDictionary["Symbol"], new Security(pascalDictionary));
+                securities.Add(item["symbol"].ToString(), JsonSerializer.Deserialize<Security>(item, options));
             }
+
+            /*JsonElement element;
+            if (responseBody.RootElement.TryGetProperty("quoteResponse", out element))
+            {
+            }
+            JsonElement element2;
+            if (element.TryGetProperty("result", out element2))
+            {
+            }
+
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+
+            foreach (var item in element2.EnumerateArray())
+            {
+                JsonElement symbol;
+                if (item.TryGetProperty("symbol", out symbol))
+                {
+                    string str = JsonSerializer.Serialize(item);
+                    securities.Add(symbol.GetString(), JsonSerializer.Deserialize<Security>(str, options));
+                }
+            }*/
 
             return securities;
         }

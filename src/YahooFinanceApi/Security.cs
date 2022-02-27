@@ -5,79 +5,71 @@ namespace YahooFinanceApi
 {
     public class Security
     {
-        public IReadOnlyDictionary<string, dynamic> Fields { get; private set; }
-
-        // ctor
-        internal Security(IReadOnlyDictionary<string, dynamic> fields) => Fields = fields;
-
-        public dynamic this[string fieldName] => Fields[fieldName];
-        public dynamic this[Field field] => Fields[field.ToString()];
-
         // Security.cs: This list was generated automatically. These names and types have been defined by Yahoo.
-        public Double Ask => this["Ask"];
-        public Int64 AskSize => this["AskSize"];
-        public Int64 AverageDailyVolume10Day => this["AverageDailyVolume10Day"];
-        public Int64 AverageDailyVolume3Month => this["AverageDailyVolume3Month"];
-        public Double Bid => this["Bid"];
-        public Int64 BidSize => this["BidSize"];
-        public Double BookValue => this["BookValue"];
-        public String Currency => this["Currency"];
-        public Int64 DividendDate => this["DividendDate"];
-        public Int64 EarningsTimestamp => this["EarningsTimestamp"];
-        public Int64 EarningsTimestampEnd => this["EarningsTimestampEnd"];
-        public Int64 EarningsTimestampStart => this["EarningsTimestampStart"];
-        public Double EpsForward => this["EpsForward"];
-        public Double EpsTrailingTwelveMonths => this["EpsTrailingTwelveMonths"];
-        public String Exchange => this["Exchange"];
-        public Int64 ExchangeDataDelayedBy => this["ExchangeDataDelayedBy"];
-        public String ExchangeTimezoneName => this["ExchangeTimezoneName"];
-        public String ExchangeTimezoneShortName => this["ExchangeTimezoneShortName"];
-        public Double FiftyDayAverage => this["FiftyDayAverage"];
-        public Double FiftyDayAverageChange => this["FiftyDayAverageChange"];
-        public Double FiftyDayAverageChangePercent => this["FiftyDayAverageChangePercent"];
-        public Double FiftyTwoWeekHigh => this["FiftyTwoWeekHigh"];
-        public Double FiftyTwoWeekHighChange => this["FiftyTwoWeekHighChange"];
-        public Double FiftyTwoWeekHighChangePercent => this["FiftyTwoWeekHighChangePercent"];
-        public Double FiftyTwoWeekLow => this["FiftyTwoWeekLow"];
-        public Double FiftyTwoWeekLowChange => this["FiftyTwoWeekLowChange"];
-        public Double FiftyTwoWeekLowChangePercent => this["FiftyTwoWeekLowChangePercent"];
-        public String FinancialCurrency => this["FinancialCurrency"];
-        public Double ForwardPE => this["ForwardPE"];
-        public String FullExchangeName => this["FullExchangeName"];
-        public Int64 GmtOffSetMilliseconds => this["GmtOffSetMilliseconds"];
-        public String Language => this["Language"];
-        public String LongName => this["LongName"];
-        public String Market => this["Market"];
-        public Int64 MarketCap => this["MarketCap"];
-        public String MarketState => this["MarketState"];
-        public String MessageBoardId => this["MessageBoardId"];
-        public Int64 PriceHint => this["PriceHint"];
-        public Double PriceToBook => this["PriceToBook"];
-        public String QuoteSourceName => this["QuoteSourceName"];
-        public String QuoteType => this["QuoteType"];
-        public Double RegularMarketChange => this["RegularMarketChange"];
-        public Double RegularMarketChangePercent => this["RegularMarketChangePercent"];
-        public Double RegularMarketDayHigh => this["RegularMarketDayHigh"];
-        public Double RegularMarketDayLow => this["RegularMarketDayLow"];
-        public Double RegularMarketOpen => this["RegularMarketOpen"];
-        public Double RegularMarketPreviousClose => this["RegularMarketPreviousClose"];
-        public Double RegularMarketPrice => this["RegularMarketPrice"];
-        public Int64 RegularMarketTime => this["RegularMarketTime"];
-        public Int64 RegularMarketVolume => this["RegularMarketVolume"];
-        public Double PostMarketChange => this["PostMarketChange"];
-        public Double PostMarketChangePercent => this["PostMarketChangePercent"];
-        public Double PostMarketPrice => this["PostMarketPrice"];
-        public Int64 PostMarketTime => this["PostMarketTime"];
-        public Int64 SharesOutstanding => this["SharesOutstanding"];
-        public String ShortName => this["ShortName"];
-        public Int64 SourceInterval => this["SourceInterval"];
-        public String Symbol => this["Symbol"];
-        public Boolean Tradeable => this["Tradeable"];
-        public Double TrailingAnnualDividendRate => this["TrailingAnnualDividendRate"];
-        public Double TrailingAnnualDividendYield => this["TrailingAnnualDividendYield"];
-        public Double TrailingPE => this["TrailingPE"];
-        public Double TwoHundredDayAverage => this["TwoHundredDayAverage"];
-        public Double TwoHundredDayAverageChange => this["TwoHundredDayAverageChange"];
-        public Double TwoHundredDayAverageChangePercent => this["TwoHundredDayAverageChangePercent"];
+        public Double Ask {get;set;}
+        public Int64 AskSize {get;set;}
+        public Int64 AverageDailyVolume10Day {get;set;}
+        public Int64 AverageDailyVolume3Month {get;set;}
+        public Double Bid  {get;set;}
+        public Int64 BidSize {get;set;}
+        public Double BookValue {get;set;}
+        public String Currency {get;set;}
+        public Int64 DividendDate {get;set;}
+        public Int64 EarningsTimestamp {get;set;}
+        public Int64 EarningsTimestampEnd {get;set;}
+        public Int64 EarningsTimestampStart {get;set;}
+        public Double EpsForward {get;set;}
+        public Double EpsTrailingTwelveMonths {get;set;}
+        public String Exchange {get;set;}
+        public Int64 ExchangeDataDelayedBy {get;set;}
+        public String ExchangeTimezoneName {get;set;}
+        public String ExchangeTimezoneShortName {get;set;}
+        public Double FiftyDayAverage {get;set;}
+        public Double FiftyDayAverageChange {get;set;}
+        public Double FiftyDayAverageChangePercent {get;set;}
+        public Double FiftyTwoWeekHigh {get;set;}
+        public Double FiftyTwoWeekHighChange {get;set;}
+        public Double FiftyTwoWeekHighChangePercent {get;set;}
+        public Double FiftyTwoWeekLow {get;set;}
+        public Double FiftyTwoWeekLowChange {get;set;}
+        public Double FiftyTwoWeekLowChangePercent {get;set;}
+        public String FinancialCurrency {get;set;}
+        public Double ForwardPE {get;set;}
+        public String FullExchangeName {get;set;}
+        public Int64 GmtOffSetMilliseconds {get;set;}
+        public String Language {get;set;}
+        public String LongName {get;set;}
+        public String Market {get;set;}
+        public Int64 MarketCap {get;set;}
+        public String MarketState {get;set;}
+        public String MessageBoardId {get;set;}
+        public Int64 PriceHint {get;set;}
+        public Double PriceToBook {get;set;}
+        public String QuoteSourceName {get;set;}
+        public String QuoteType {get;set;}
+        public Double RegularMarketChange {get;set;}
+        public Double RegularMarketChangePercent {get;set;}
+        public Double RegularMarketDayHigh {get;set;}
+        public Double RegularMarketDayLow {get;set;}
+        public Double RegularMarketOpen {get;set;}
+        public Double RegularMarketPreviousClose {get;set;}
+        public Double RegularMarketPrice {get;set;}
+        public Int64 RegularMarketTime {get;set;}
+        public Int64 RegularMarketVolume {get;set;}
+        public Double PostMarketChange {get;set;}
+        public Double PostMarketChangePercent {get;set;}
+        public Double PostMarketPrice {get;set;}
+        public Int64 PostMarketTime {get;set;}
+        public Int64 SharesOutstanding {get;set;}
+        public String ShortName {get;set;}
+        public Int64 SourceInterval {get;set;}
+        public String Symbol {get;set;}
+        public Boolean Tradeable {get;set;}
+        public Double TrailingAnnualDividendRate {get;set;}
+        public Double TrailingAnnualDividendYield {get;set;}
+        public Double TrailingPE {get;set;}
+        public Double TwoHundredDayAverage {get;set;}
+        public Double TwoHundredDayAverageChange {get;set;}
+        public Double TwoHundredDayAverageChangePercent {get;set;}
     }
 }

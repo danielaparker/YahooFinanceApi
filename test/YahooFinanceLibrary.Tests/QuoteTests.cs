@@ -25,13 +25,21 @@ namespace YahooFinanceApi.Tests
                 .QueryAsync();
 
             var aaplQuote = quote[AAPL];
-            var aaplOpen = aaplQuote[Field.RegularMarketOpen.ToString()];
-            var aaplHigh = aaplQuote[Field.RegularMarketDayHigh.ToString()];
-            var aaplLow = aaplQuote[Field.RegularMarketDayLow.ToString()];
-            var aaplCurrentPrice = aaplQuote[Field.RegularMarketPrice.ToString()];
-            var aaplVolume = aaplQuote[Field.RegularMarketVolume.ToString()];
-            var aaplTime = aaplQuote[Field.RegularMarketTime.ToString()];
+            //var aaplOpen = aaplQuote[Field.RegularMarketOpen.ToString()];
+            //var aaplHigh = aaplQuote[Field.RegularMarketDayHigh.ToString()];
+            //var aaplLow = aaplQuote[Field.RegularMarketDayLow.ToString()];
+            //var aaplCurrentPrice = aaplQuote[Field.RegularMarketPrice.ToString()];
+            //var aaplVolume = aaplQuote[Field.RegularMarketVolume.ToString()];
+            //var aaplTime = aaplQuote[Field.RegularMarketTime.ToString()];
 
+            var aaplOpen = aaplQuote.RegularMarketOpen;
+            var aaplHigh = aaplQuote.RegularMarketDayHigh;
+            var aaplLow = aaplQuote.RegularMarketDayLow;
+            var aaplCurrentPrice = aaplQuote.RegularMarketPrice;
+            var aaplVolume = aaplQuote.RegularMarketVolume;
+            var aaplTime = aaplQuote.RegularMarketTime;
+
+            //Assert.AreEqual(AAPL, aaplQuote[AAPL]); 
             // Get New York Timezone for conversion from UTC to New York Time for Yahoo Quotes
             TimeZoneInfo TzEst = TimeZoneInfo
                 .GetSystemTimeZones()
@@ -97,16 +105,16 @@ namespace YahooFinanceApi.Tests
             var security = securities["C"];
 
             // Bid string or enum indexer returns dynamic type.
-            security.Fields.TryGetValue("Bid", out dynamic bid);
-            bid = security.Fields["Bid"];
-            bid = security["Bid"];
-            bid = security[Field.Bid];
+            //security.Fields.TryGetValue("Bid", out dynamic bid);
+            var bid = security.Bid;
+            //bid = security["Bid"];
+            //bid = security[Field.Bid];
 
             // Bid property returns static type.
             var bid2 = security.Bid;
 
             //Assert.IsTrue(securities["C"][Field.Tradeable]);
-            Assert.AreEqual("Apple Inc.", securities["AAPL"]["LongName"]);
+            Assert.AreEqual("Apple Inc.", securities["AAPL"].LongName);
         }
 
     }

@@ -1,5 +1,4 @@
 ﻿using CsvHelper;
-using Flurl;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Diagnostics;
 using System.Globalization;
+using System.Text;
 
 namespace YahooFinanceApi
 {
@@ -99,13 +99,14 @@ namespace YahooFinanceApi
                 startTime = startTime?.FromEstToUtc() ?? new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
                 endTime =   endTime?  .FromEstToUtc() ?? DateTime.UtcNow;
 
-                var url = "https://query1.finance.yahoo.com/v7/finance/download"
-                    .AppendPathSegment(symbol)
-                    .SetQueryParam("period1", startTime.Value.ToUnixTimestamp())
-                    .SetQueryParam("period2", endTime.Value.ToUnixTimestamp())
-                    .SetQueryParam("interval", $"1{period.Name()}")
-                    .SetQueryParam("events", events)
-                    .SetQueryParam("crumb", _crumb);
+                var sb = new StringBuilder($"https://query1.finance.yahoo.com/v7/finance/download/{symbol}?");
+                sb.Append($"period1={startTime.Value.ToUnixTimestamp()}&");
+                sb.Append($"period2={endTime.Value.ToUnixTimestamp()}&");
+                sb.Append($"interval=1{period.Name()}&");
+                sb.Append($"events={events}&");
+                sb.Append($"crumb={_crumb}");
+
+                var url = sb.ToString();
 
                 Debug.WriteLine(url);
                 
